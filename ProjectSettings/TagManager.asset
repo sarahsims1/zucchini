@@ -8,6 +8,8 @@ TagManager:
   - squash
   - dirt
   - seeds
+  - ground
+  - firstCheck
   layers:
   - Default
   - TransparentFX

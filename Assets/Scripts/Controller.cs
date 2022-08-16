@@ -13,6 +13,8 @@ public class Controller : MonoBehaviour
     private int jumpCount;
 
     private int timesJumped;
+
+    public bool onGround;
     void Start()
     {
         
@@ -32,9 +34,23 @@ public class Controller : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag.Equals("platforms"))
+        if(collision.gameObject.tag.Equals("platforms")|| collision.gameObject.tag.Equals("ground"))
         {
             timesJumped = 0;
+        }
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Equals("ground"))
+        {
+            onGround = true;
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Equals("ground"))
+        {
+            onGround = false;
         }
     }
 }

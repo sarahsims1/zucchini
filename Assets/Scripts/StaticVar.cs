@@ -6,10 +6,14 @@ public class StaticVar : MonoBehaviour
 {
     private static int squashGathered;
 
-    private static int dirtGathered=99;
+    private static int dirtGathered;
 
-    private static int seedsGathered=99;
+    private static int seedsGathered;
 
+    private static bool tutorialFailed;
+
+    public delegate void Change();
+    public static Change varChange;
     public static int GetSquash()
     {
         return squashGathered;
@@ -25,17 +29,33 @@ public class StaticVar : MonoBehaviour
     }
 
     public static void SetSquash(int squash)
-    {
-        squashGathered = squash;
+    { 
+        if (squash >= 0) squashGathered = squash;
+        else squashGathered = 0;
+        varChange();
     }
 
     public static void SetSeeds(int seeds)
     {
-        seedsGathered = seeds;
+        if (seeds >= 0) seedsGathered = seeds;
+        else seedsGathered = 0;
+        varChange();
     }
 
     public static void SetDirt(int dirt)
     {
-        dirtGathered = dirt;
+        if (dirt >= 0) dirtGathered = dirt;
+        else dirtGathered = 0;
+        varChange();
+    }
+
+    public static bool GetFailed()
+    {
+        return tutorialFailed;
+    }
+
+    public static void SetFailed(bool failed)
+    {
+        tutorialFailed = failed;
     }
 }
