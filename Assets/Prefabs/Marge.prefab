@@ -163,4 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plant: {fileID: 1883144086032168282, guid: d233f13c4d57c8c47804a8214cdb3b30, type: 3}
+  plantPlat: {fileID: 0}
   plantHeight: 7
+  growthTime: 0
+  offSet: 0
