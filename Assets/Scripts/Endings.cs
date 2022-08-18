@@ -21,7 +21,7 @@ public class Endings : MonoBehaviour
         //Checks number of squash, gives ending.
         switch (StaticVar.GetSquash())
         {
-            case 8:
+            case 10:
                 ending1.SetActive(false);
                 ending2.SetActive(true);
                 ending3.SetActive(false);

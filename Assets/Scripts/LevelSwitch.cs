@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class LevelSwitch : MonoBehaviour
 {
+    /// <summary>
+    /// Switches camera position and resizes it for each level
+    /// </summary>
+    /// 
     private Camera mainCam;
 
     [SerializeField]
     private float cameraSize;
 
-    [SerializeField]
-    private float travelSpeed;
-
     private bool thisCam;
+
+    //finds the camera
     void Start()
     {
         mainCam = GameObject.FindGameObjectsWithTag("MainCamera")[0].GetComponent<Camera>();
     }
 
-    // Update is called once per frame
+    // if we are in the level area, the camera switches
     void Update()
     {
         if(thisCam)
@@ -28,6 +31,7 @@ public class LevelSwitch : MonoBehaviour
         }
     }
 
+    //Collision checks
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag.Equals("Player"))

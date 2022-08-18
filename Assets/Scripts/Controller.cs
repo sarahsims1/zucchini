@@ -65,6 +65,7 @@ public class Controller : MonoBehaviour
         }
     }
 
+    //Methods for movement
     public void Move()
     {
         transform.position += new Vector3(movement * movementSpeed * Time.deltaTime, 0);
@@ -80,6 +81,8 @@ public class Controller : MonoBehaviour
         GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
         timesJumped++;
     }
+
+    //Checks for collisions
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag.Equals("platforms")|| collision.gameObject.tag.Equals("ground") || collision.gameObject.tag.Equals("leaf"))

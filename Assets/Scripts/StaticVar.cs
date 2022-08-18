@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class StaticVar : MonoBehaviour
 {
+
+    /// <summary>
+    /// The games main vairables with get/set methods
+    /// </summary>\
+
     private static int squashGathered;
 
     private static int dirtGathered;
@@ -18,7 +23,6 @@ public class StaticVar : MonoBehaviour
     {
         return squashGathered;
     }
-
     public static int GetDirt()
     {
         return dirtGathered;

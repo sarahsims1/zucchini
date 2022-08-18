@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class ChangeLeaf : MonoBehaviour
 {
+    //Ground object
     public GameObject ground;
 
+    //The leaf we are on
     private GameObject thisLeaf;
 
     void Update()
     {
+        //if you hit q and conditions are right, the leaf turns to ground
        if(CheckConditions() && Input.GetKeyDown(KeyCode.Q))
         {
             Instantiate(ground, thisLeaf.transform.position, thisLeaf.transform.rotation).transform.parent = checkpoint.thisCheck.transform;
@@ -17,6 +20,8 @@ public class ChangeLeaf : MonoBehaviour
             StaticVar.SetDirt(StaticVar.GetDirt() - 1);
         }
     }
+
+    //Collsion checks
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag.Equals("leaf"))
@@ -33,6 +38,8 @@ public class ChangeLeaf : MonoBehaviour
         }
     }
 
+
+    //Conditions for turning leaf
     private bool CheckConditions()
     {
         if (StaticVar.GetDirt() == 0) return false;

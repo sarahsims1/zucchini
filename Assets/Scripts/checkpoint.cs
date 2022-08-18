@@ -92,8 +92,9 @@ public class checkpoint : MonoBehaviour
             if (thisCheck != null && thisCheck != gameObject)
             {
                 //Turns the flag green for visual feedback (fancy words)
-                thisCheck = gameObject;
                 GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
+                
+                thisCheck = gameObject;
                 for (int i = 0; i < Convert.ToInt32(gameObject.name) - 1; i++)
                 {
                     transform.parent.gameObject.transform.GetChild(i).transform.DetachChildren();
