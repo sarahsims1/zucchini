@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class ManiMenu : MonoBehaviour
 {
+
+    /// <summary>
+    /// A script with methods for switching screens and scenes
+    /// </summary>
     [SerializeField]
     private GameObject main;
 

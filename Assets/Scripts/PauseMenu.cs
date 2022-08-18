@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
+
+    //Methods for the pause menu
+
     [SerializeField]
     private GameObject pauseScreen;
 
@@ -14,7 +17,7 @@ public class PauseMenu : MonoBehaviour
     }
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Tab) && !pauseScreen.activeSelf)
+        if(Input.GetKeyDown(KeyCode.Escape) && !pauseScreen.activeSelf)
         {
             Time.timeScale = 0;
             pauseScreen.SetActive(true);

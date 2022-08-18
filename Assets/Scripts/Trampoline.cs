@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Trampoline : MonoBehaviour
 {
+
+    //Serves as an end point, transitions to the win/lose screen
     [SerializeField]
     private GameObject player;
 

@@ -13,6 +13,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField]
     private GameObject levelMarks;
 
+    //Camera follows at the end, when the player hits a trigger
     void Update()
     {
         if(fallTrigger.hit)
