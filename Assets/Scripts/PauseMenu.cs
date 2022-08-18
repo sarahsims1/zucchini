@@ -22,7 +22,7 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 0;
             pauseScreen.SetActive(true);
         }
-        else if(Input.GetKeyDown(KeyCode.Tab))
+        else if(Input.GetKeyDown(KeyCode.Escape))
         {
             Resume();
         }
@@ -31,11 +31,6 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1;
         pauseScreen.SetActive(false);
-    }
-
-    public void ExitToMenu()
-    {
-        SceneManager.LoadScene("MainMenu");
     }
 
     public void Quit()

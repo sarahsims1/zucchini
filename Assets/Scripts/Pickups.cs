@@ -10,6 +10,12 @@ public class Pickups : MonoBehaviour
     [SerializeField]
     private AudioClip pop;
     //Increments variables when picked up
+    private void Start()
+    {
+        StaticVar.SetDirt(0);
+        StaticVar.SetSeeds(0);
+        StaticVar.SetSquash(0);
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         
