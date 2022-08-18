@@ -10,6 +10,8 @@ TagManager:
   - seeds
   - ground
   - firstCheck
+  - Trigger
+  - leaf
   layers:
   - Default
   - TransparentFX

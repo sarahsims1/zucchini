@@ -9,7 +9,12 @@ public class checkpoint : MonoBehaviour
     [SerializeField]
     private GameObject[] g;
 
+    [SerializeField]
+    private GameObject leaf;
+
     public static GameObject thisCheck;
+
+    public static bool Abort;
 
     private void Start()
     {
@@ -20,22 +25,41 @@ public class checkpoint : MonoBehaviour
     }
     void Update()
     {
+        //If the checkpoint we're at is the current checkpoint...
         if(gameObject == thisCheck && Input.GetKeyDown(KeyCode.R))
         {
+            //Teleport player to point, abort any growing plants
             player.transform.position = transform.position;
-            if (!tag.Equals("firstCheck")) 
+            Abort = true;
+
+            //This is a lot of gobledeygook that ensures that if the player misses a checkpoint, grabs an item related to another checkpoint, then spawns back, that those items will respawn.
+            //It's a lot of parent/child references. Each item related to the checkpoint is its child. 
+
+            GameObject parent = transform.parent.gameObject;
+
+            int numberOfCheckpoints = parent.transform.childCount;
+
+            //For each checkpoint above and including this one...
+            for (int i = numberOfCheckpoints-1; i > Convert.ToInt32(gameObject.name)-2; i--)
             {
                 
-                foreach (GameObject a in g)
+                GameObject child = parent.transform.GetChild(i).gameObject;
+
+                //We check the items related to the checkpoint.
+                for (int j = child.gameObject.transform.childCount - 1; j > -1; j--)
                 {
-                    if (a.activeSelf == false)
+                    GameObject item = child.gameObject.transform.GetChild(j).gameObject;
+
+                    //If they're deactivated, we reactivated them and deduct the items from our "inventory".
+                    if (!item.activeSelf)
                     {
-                        switch (a.tag)
+                        item.SetActive(true);
+                        switch (item.tag)
                         {
                             case "dirt":
                                 StaticVar.SetDirt(StaticVar.GetDirt() - 1);
                                 break;
-                            case "seed":
+                            case "seeds":
                                 StaticVar.SetSeeds(StaticVar.GetSeeds() - 1);
                                 break;
                             case "squash":
@@ -43,32 +67,40 @@ public class checkpoint : MonoBehaviour
                                 break;
                         }
                     }
-                    a.SetActive(true);
+
+                    //Turns ground back into leaves (sneaky)
+                    else if(item.tag.Equals("ground"))
+                    {
+                        Instantiate(leaf, item.transform.position, item.transform.rotation).transform.parent = null;
+                        Destroy(item);
+                    }
+                    //If they are active, we check tags. Anything thats not a pickup is a plant, and is destroyed.
+                    else if(!item.tag.Equals("dirt") && !item.tag.Equals("seeds") && !item.tag.Equals("squash"))
+                    {
+                        Destroy(item);
+                    }
                 }
-                for (int i = 0; i < thisCheck.transform.childCount; i++)
-                {
-                    Destroy(thisCheck.transform.GetChild(i).gameObject);
-                }
-            }
-            else
-            {
-                g[0].SetActive(true);
-                g[1].SetActive(true);
             }
         }
     }
+    
+    //This destroys old checkpoints to prevent confusion.
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (thisCheck != null && thisCheck != gameObject)
+        if (collision.gameObject.tag.Equals("Player"))
         {
-            thisCheck = gameObject;
-            for(int i = 0; i<Convert.ToInt32(gameObject.name)-1; i++)
+            if (thisCheck != null && thisCheck != gameObject)
             {
-                transform.parent.gameObject.transform.GetChild(i).transform.DetachChildren();
-                transform.parent.gameObject.transform.GetChild(i).gameObject.SetActive(false);
+                //Turns the flag green for visual feedback (fancy words)
+                thisCheck = gameObject;
+                GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
+                for (int i = 0; i < Convert.ToInt32(gameObject.name) - 1; i++)
+                {
+                    transform.parent.gameObject.transform.GetChild(i).transform.DetachChildren();
+                    transform.parent.gameObject.transform.GetChild(i).gameObject.SetActive(false);
+                }
             }
+            else thisCheck = gameObject;
         }
-        else thisCheck = gameObject;
-        Debug.Log("touched");
     }
 }
