@@ -50,14 +50,21 @@ public class Plant : MonoBehaviour
     }
     void Update()
     {
-        //If the player has dirt and seeds, and presses E, we can plant.
+        //If the checkpoint has aborted, we stop growing the plant.
+        if(checkpoint.Abort)
+        {
+            ready = false;
+        }
+
+        //If the player has dirt and seeds, and presses E, we can plant. Also, abort is turned off
         if(Input.GetKeyDown(KeyCode.E)  && !ready && ConditionCheck())
         {
+            checkpoint.Abort = false;
             ready = true;
             g = new GameObject();
             StaticVar.SetDirt(StaticVar.GetDirt() - 1);
             StaticVar.SetSeeds(StaticVar.GetSeeds() - 1);
-            place = transform.position;
+            place = transform.position - new Vector3(0,GetComponent<SpriteRenderer>().bounds.size.y/2);
             turn = transform.rotation;
         }
 
@@ -68,14 +75,19 @@ public class Plant : MonoBehaviour
         }
 
         //Spawns parts of the stalk
-        if(ready && time > growthTime && grown<plantHeight)
+        if (ready && time > growthTime && grown < plantHeight)
         {
             Instantiate(plant, place, turn).transform.parent = g.transform;
 
+            //Associates plant with the current checkpoint so it can be destroyed if need be.
+            if (checkpoint.thisCheck != null) g.transform.parent = checkpoint.thisCheck.transform;
+
             //On every third stalk spawn, we spawn a platform
-            if (grown % 3 == 0)
+            if (grown % 3 == 0 && grown != 0)
             {
-                Instantiate(plantPlat, place + new Vector3(offSet*Right(right),0,0), turn).transform.parent = g.transform; ;
+                GameObject leek = Instantiate(plantPlat, place + new Vector3(offSet*Right(right),0,0), turn);
+                leek.transform.parent = g.transform;
+                if (right) leek.GetComponent<SpriteRenderer>().flipX = true;
                 platformsGrown++;
                 if (right) right = false; else right = true;
             }
@@ -92,7 +104,6 @@ public class Plant : MonoBehaviour
             ready = false;
             plantsGrown++;
             grown = 0;
-            if(checkpoint.thisCheck!=null)g.transform.parent = checkpoint.thisCheck.transform;
         }
     }
 
@@ -102,6 +113,7 @@ public class Plant : MonoBehaviour
         if (right) return 1; else return -1;
     }
 
+    //Checks conditions (did I really need to comment that)
     private bool ConditionCheck()
     {
         if (!GetComponent<Controller>().onGround) return false;

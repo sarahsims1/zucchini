@@ -10,10 +10,10 @@ public class StaticVar : MonoBehaviour
 
     private static int seedsGathered;
 
-    private static bool tutorialFailed;
-
     public delegate void Change();
+
     public static Change varChange;
+
     public static int GetSquash()
     {
         return squashGathered;
@@ -49,13 +49,4 @@ public class StaticVar : MonoBehaviour
         varChange();
     }
 
-    public static bool GetFailed()
-    {
-        return tutorialFailed;
-    }
-
-    public static void SetFailed(bool failed)
-    {
-        tutorialFailed = failed;
-    }
 }

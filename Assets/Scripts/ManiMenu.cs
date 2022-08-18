@@ -21,7 +21,10 @@ public class ManiMenu : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene("Game");
+        StaticVar.SetDirt(0);
+        StaticVar.SetSeeds(0);
+        StaticVar.SetSquash(0);
+        SceneManager.LoadScene("Game"); 
     }
 
     public void Quit()

@@ -1,10 +1,15 @@
 using UnityEngine.SceneManagement;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Trampoline : MonoBehaviour
 {
     [SerializeField]
     private GameObject player;
+
+    [SerializeField]
+    private TMP_Text text;
     void Update()
     {
         
@@ -12,9 +17,16 @@ public class Trampoline : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject == player && player.GetComponent<Rigidbody2D>().velocity == new Vector2(0,0))
+        if(collision.gameObject == player)
         {
-            SceneManager.LoadScene("WinLose");
+            StartCoroutine(Finish());
         }
+    }
+
+    private IEnumerator Finish()
+    {
+        text.text = "FINISH!";
+        yield return new WaitForSecondsRealtime(3);
+        SceneManager.LoadScene("WinLose");
     }
 }

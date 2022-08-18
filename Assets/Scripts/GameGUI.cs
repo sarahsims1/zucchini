@@ -11,6 +11,14 @@ public class GameGUI : MonoBehaviour
     private TMP_Text seeds;
     [SerializeField]
     private TMP_Text squash;
+
+    //Tagging on the audio here because it's simple.
+
+    [SerializeField]
+    private new AudioSource audio;
+
+    [SerializeField]
+    private AudioClip pop;
     void Start()
     {
         StaticVar.varChange += UpdateUI;
@@ -20,5 +28,6 @@ public class GameGUI : MonoBehaviour
         dirt.text = StaticVar.GetDirt().ToString();
         seeds.text = StaticVar.GetSeeds().ToString();
         squash.text = StaticVar.GetSquash().ToString();
+        audio.PlayOneShot(pop);
     }
 }
